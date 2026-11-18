@@ -726,9 +726,10 @@ class FreshRSS_EntryDAO extends Minz_ModelPdo {
 		$affected = $stm->rowCount();
 
 		if ($affected > 0) {
+			$delta = $is_read ? '-' : '+';
 			$sql = <<<SQL
 				UPDATE `_feed`
-				SET `cache_nbUnreads`=`cache_nbUnreads`-{$affected}
+				SET `cache_nbUnreads`=`cache_nbUnreads`{$delta}{$affected}
 				WHERE id=:id
 				SQL;
 			$stm = $this->pdo->prepare($sql);
